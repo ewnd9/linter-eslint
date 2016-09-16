@@ -46,3 +46,11 @@ export function showError(givenMessage, givenDetail = null) {
     dismissable: true
   })
 }
+
+export function validatePoint(textEditor, line, col) {
+  const buffer = textEditor.getBuffer()
+  // Clip the given point to a valid one, and check if it equals the original
+  if (!buffer.clipPosition([line, col]).isEqual([line, col])) {
+    throw new Error(`${line}:${col} isn't a valid point!`)
+  }
+}
