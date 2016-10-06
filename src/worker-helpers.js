@@ -30,18 +30,19 @@ export function getNodePrefixPath() {
 }
 
 export function getESLintFromDirectory(modulesDir, config) {
-  let ESLintDirectory = null
-
-  if (config.useGlobalEslint) {
-    const prefixPath = config.globalNodePath || getNodePrefixPath()
-    if (process.platform === 'win32') {
-      ESLintDirectory = Path.join(prefixPath, 'node_modules', 'eslint')
-    } else {
-      ESLintDirectory = Path.join(prefixPath, 'lib', 'node_modules', 'eslint')
-    }
-  } else {
-    ESLintDirectory = Path.join(modulesDir || '', 'eslint')
-  }
+  const ESLintDirectory = Path.resolve(__dirname, '..', 'node_modules', 'eslint')
+  // let ESLintDirectory = null
+  //
+  // if (config.useGlobalEslint) {
+  //   const prefixPath = config.globalNodePath || getNodePrefixPath()
+  //   if (process.platform === 'win32') {
+  //     ESLintDirectory = Path.join(prefixPath, 'node_modules', 'eslint')
+  //   } else {
+  //     ESLintDirectory = Path.join(prefixPath, 'lib', 'node_modules', 'eslint')
+  //   }
+  // } else {
+  //   ESLintDirectory = Path.join(modulesDir || '', 'eslint')
+  // }
   try {
     // eslint-disable-next-line import/no-dynamic-require
     return require(Path.join(ESLintDirectory, 'lib', 'cli.js'))
@@ -71,20 +72,21 @@ export function getESLintInstance(fileDir, config) {
 }
 
 export function getConfigPath(fileDir) {
-  const configFile =
-    findCached(fileDir, [
-      '.eslintrc.js', '.eslintrc.yaml', '.eslintrc.yml', '.eslintrc.json', '.eslintrc'
-    ])
-  if (configFile) {
-    return configFile
-  }
-
-  const packagePath = findCached(fileDir, 'package.json')
-  // eslint-disable-next-line import/no-dynamic-require
-  if (packagePath && Boolean(require(packagePath).eslintConfig)) {
-    return packagePath
-  }
-  return null
+  return Path.resolve(__dirname, '..', 'eslint-reset.yaml');
+  // const configFile =
+  //   findCached(fileDir, [
+  //     '.eslintrc.js', '.eslintrc.yaml', '.eslintrc.yml', '.eslintrc.json', '.eslintrc'
+  //   ])
+  // if (configFile) {
+  //   return configFile
+  // }
+  //
+  // const packagePath = findCached(fileDir, 'package.json')
+  // // eslint-disable-next-line import/no-dynamic-require
+  // if (packagePath && Boolean(require(packagePath).eslintConfig)) {
+  //   return packagePath
+  // }
+  // return null
 }
 
 export function getRelativePath(fileDir, filePath, config) {
