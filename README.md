@@ -1,5 +1,11 @@
 # linter-eslint
 
+## Fork notes:
+
+- All rules are reset except `no-redeclare: 2`
+
+---
+
 [![Build Status](https://travis-ci.org/AtomLinter/linter-eslint.svg)](https://travis-ci.org/AtomLinter/linter-eslint)
 [![Dependency Status](https://david-dm.org/AtomLinter/linter-eslint.svg)](https://david-dm.org/AtomLinter/linter-eslint)
 
